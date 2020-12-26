@@ -5,6 +5,7 @@
  ****************************************************************************/
 
 module spi_target_bfm #(
+		parameter DAT_WIDTH = 8
         ) (
         input						reset,
         input						sclk,

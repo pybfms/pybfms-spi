@@ -5,6 +5,7 @@
  ****************************************************************************/
 
 module qspi_initiator_bfm #(
+		parameter DAT_WIDTH = 8
         ) (
         input                            clock,
         input                            reset

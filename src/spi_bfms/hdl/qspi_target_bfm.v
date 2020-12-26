@@ -5,6 +5,7 @@
  ****************************************************************************/
 
 module qspi_target_bfm #(
+		parameter DAT_WIDTH = 8
         ) (
         input				clk,
         input				csn,
