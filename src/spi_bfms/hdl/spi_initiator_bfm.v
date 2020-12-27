@@ -19,7 +19,7 @@ module spi_initiator_bfm #(
 	reg[DAT_WIDTH-1:0]		dat_out_v;
 	reg[DAT_WIDTH-1:0]		dat_out_r;
 	reg[1:0]				xmit_en = 0;
-	reg[7:0]				sck_div = 10;
+	reg[7:0]				sck_div = 0;
 	reg[7:0]				sck_div_cnt = 0;
 
 	reg sck_r = 0;

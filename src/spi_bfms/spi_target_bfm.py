@@ -11,10 +11,26 @@ class SpiTargetBfm():
         self.busy = pybfms.lock()
         self.is_reset = False
         self.reset_ev = pybfms.event()
+        self.recv_f = None
+        pass
+
+    def send(self, data):
+        self._send(data)
+
+    @pybfms.export_task(pybfms.uint64_t)    
+    def _recv(self, data):
+        if self.recv_f is not None:
+            self.recv_f(data)
+        else:
+            print("Note: received data " + hex(data))
+            
+    @pybfms.import_task(pybfms.uint64_t)    
+    def _send(self, data):
         pass
         
-    @pybfms.export_task()
-    def _set_praameters(self):
+    @pybfms.export_task(pybfms.uint32_t)
+    def _set_parameters(self, dat_width):
+        self.dat_width = dat_width
         pass
         
     @pybfms.export_task()
