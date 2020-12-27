@@ -24,7 +24,7 @@ class SpiTargetBfm():
         else:
             print("Note: received data " + hex(data))
             
-    @pybfms.import_task(pybfms.uint64_t)    
+    @pybfms.import_task(pybfms.uint64_t)
     def _send(self, data):
         pass
         
