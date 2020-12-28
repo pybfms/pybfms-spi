@@ -56,7 +56,7 @@ module qspi_initiator_bfm #(
 	end	
 	
     reg            in_reset = 0;
-    always @(resetn) begin
+    always @(posedge clk) begin
     	if (~resetn) begin
     		in_reset <= 1;
     	end else begin
@@ -74,7 +74,7 @@ module qspi_initiator_bfm #(
     	if (~resetn) begin
     		xmit_state <= 0;
     		xmit_count <= {8{1'b0}};
-    		xfer_mode <= XFER_MODE_SPI;
+    		xfer_mode = XFER_MODE_SPI;
     	end else if (~csn) begin
     		// Send the next bits
     		case (xfer_mode)

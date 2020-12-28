@@ -51,7 +51,7 @@ module qspi_target_bfm #(
 		if (~resetn) begin
 			xmit_state <= 0;
 			xmit_count <= {8{1'b0}};
-			xfer_mode <= XFER_MODE_SPI;
+			xfer_mode = XFER_MODE_SPI;
 		end else if (~csn) begin
 			// Send the next bits
 			case (xfer_mode)
