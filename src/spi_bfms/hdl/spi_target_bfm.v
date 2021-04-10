@@ -7,7 +7,7 @@
 module spi_target_bfm #(
 		parameter DAT_WIDTH = 8
         ) (
-        input						resetn,
+        input						reset,
         input						sck,
         input						sdi,
         inout						sdo,
@@ -28,8 +28,8 @@ module spi_target_bfm #(
 	// Transmit state machine
 	reg      xmit_state = 0;
 	reg[7:0] xmit_count = 0;
-	always @(negedge sck or negedge resetn) begin
-		if (~resetn) begin
+	always @(negedge sck or posedge reset) begin
+		if (reset) begin
 			xmit_state <= 0;
 			xmit_count <= {8{1'b0}};
 		end else begin
@@ -55,8 +55,8 @@ module spi_target_bfm #(
 	// Receive state machine
 	reg      recv_state = 0;
 	reg[7:0] recv_count = 0;
-	always @(posedge sck or negedge resetn) begin
-		if (~resetn) begin
+	always @(posedge sck or posedge reset) begin
+		if (reset) begin
 			recv_state <= 0;
 			recv_count <= {8{1'b0}};
 		end else begin
@@ -66,6 +66,9 @@ module spi_target_bfm #(
 					if (~csn) begin
 						recv_count <= 1;
 						recv_state <= 1;
+						// Notify the Python side so it can
+						// specify the data to send
+						_recv_start();
 					end
 				end
 				1: begin
@@ -74,6 +77,7 @@ module spi_target_bfm #(
 						// Send the resulting data back. Note that
 						// The final bit hasn't been shifted in, so we
 						// handle that here
+						$display("Recive byte 'h%02h", {dat_in_r[DAT_WIDTH-2:0], sdi});
 						_recv({dat_in_r[DAT_WIDTH-2:0], sdi});
 					end else begin
 						recv_count <= recv_count + 1;
@@ -86,7 +90,6 @@ module spi_target_bfm #(
     task init;
     begin
         $display("spi_target_bfm: %m");
-        // TODO: pass parameter values
         _set_parameters(DAT_WIDTH);
     end
     endtask

@@ -11,11 +11,18 @@ class SpiTargetBfm():
         self.busy = pybfms.lock()
         self.is_reset = False
         self.reset_ev = pybfms.event()
+        self.recv_start_f = None
         self.recv_f = None
         pass
 
     def send(self, data):
         self._send(data)
+        
+    @pybfms.export_task()
+    def _recv_start(self):
+        if self.recv_start_f is not None:
+            data = self.recv_start_f()
+            self._send(data)
 
     @pybfms.export_task(pybfms.uint64_t)    
     def _recv(self, data):

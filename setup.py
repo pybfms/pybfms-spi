@@ -8,7 +8,7 @@ from distutils.core import setup, Command
 
 VERSION = "0.0.1"
 AUTHOR = "Author TBD"
-AUTOR_EMAIL = "Author Email TBD"
+AUTHOR_EMAIL = "Author Email TBD"
 DESCRIPTION = "Description TBD"
 LICENSE = "Apache 2.0"
 URL = "https://github.com/TBD"
