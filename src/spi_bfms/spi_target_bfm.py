@@ -13,6 +13,7 @@ class SpiTargetBfm():
         self.reset_ev = pybfms.event()
         self.recv_start_f = None
         self.recv_f = None
+        self.clocked_csn_high_f = None
         pass
 
     def send(self, data):
@@ -30,6 +31,13 @@ class SpiTargetBfm():
             self.recv_f(data)
         else:
             print("Note: received data " + hex(data))
+            
+    @pybfms.export_task()
+    def _clocked_csn_high(self):
+        print("clocked_csn_high")
+        if self.clocked_csn_high_f is not None:
+            self.clocked_csn_high_f()
+        pass
             
     @pybfms.import_task(pybfms.uint64_t)
     def _send(self, data):
