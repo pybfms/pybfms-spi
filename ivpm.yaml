@@ -1,0 +1,17 @@
+
+package:
+  name: pybfms-spi
+  version: 0.0.1
+
+  deps:
+    - name: pybfms
+      src: pypi
+    - name: cocotb
+      src: pypi
+  
+  dev-deps:
+    - name: pybfms
+      url: https://github.com/pybfms/pybfms.git
+    - name: cocotb
+      src: pypi
+      
